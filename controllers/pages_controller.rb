@@ -1,9 +1,6 @@
 module Cellar
   class Base
     get '/' do
-      html 'sdf'
-      css 'sdf'
-      
       page = Page['index']
       template = page.template || 'index'
       content = page.content || []
