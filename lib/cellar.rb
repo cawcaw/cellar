@@ -12,11 +12,11 @@ require 'sass'
 
 module Cellar
   class << self
-    def root
-      File.expand_path '../..', __FILE__
+    def path_lib
+      File.expand_path '../cellar', __FILE__
     end
     def path(dir = '')
-      File.join root, dir
+      File.join path_lib, dir
     end
   end
 
@@ -24,9 +24,9 @@ module Cellar
   end
 end
 
-require Cellar.path('lib/cellar/environment')
-require Cellar.path('lib/cellar/base_controller')
-require Cellar.path('lib/cellar/render')
+require Cellar.path('environment')
+require Cellar.path('base_controller')
+require Cellar.path('render')
 
 Dir.glob(Cellar.path('views/*.rb'), &method(:require))
 
