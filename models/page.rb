@@ -1,4 +1,6 @@
-class Page < Sequel::Model
-  set_primary_key :slug
+module Cellar
+  class Page < Sequel::Model
+    set_primary_key :slug
+  end
 end
 

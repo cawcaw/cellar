@@ -11,7 +11,7 @@ describe App do
     Sequel.extension :migration
     Sequel::Migrator.apply App::DB, Cellar.path('db/migrations'), -1
     Sequel::Migrator.apply App::DB, Cellar.path('db/migrations')
-    test_site = Site.new
+    test_site = Cellar::Site.new
     test_site.name = 'test'
     test_site.domain = 'localhost'
     test_site.save
