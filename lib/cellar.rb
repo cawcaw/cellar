@@ -20,12 +20,13 @@ module Cellar
     end
   end
 
-  class Base < Sinatra::Base; end
+  class Base < Sinatra::Base
+  end
 end
 
-require 'cellar/environment'
-require 'cellar/base_controller'
-require 'cellar/render'
+require Cellar.path('lib/cellar/environment')
+require Cellar.path('lib/cellar/base_controller')
+require Cellar.path('lib/cellar/render')
 
 Dir.glob(Cellar.path('views/*.rb'), &method(:require))
 

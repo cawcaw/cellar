@@ -1,0 +1,19 @@
+defaults: &defaults
+  adapter: postgres
+  encoding: unicode
+  pool_timeout: 5
+
+development:
+  database: cellar_development
+  host: localhost
+  <<: *defaults
+
+test:
+  database: cellar_test
+  host: localhost
+  <<: *defaults
+
+production:
+  database: cellar
+  host: localhost
+  <<: *defaults
