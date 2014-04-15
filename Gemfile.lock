@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cellar (0.0.3)
+    cellar (0.0.4)
       json
       mustache
       pg

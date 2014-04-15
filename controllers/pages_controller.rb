@@ -10,7 +10,7 @@ module Cellar
     get '/:page' do
       content = []
       if page = Page[params[:page]]
-        template = page.templat
+        template = page.template
         content = page.content
       elsif template_exist?(params[:page])
         template = params[:page]
