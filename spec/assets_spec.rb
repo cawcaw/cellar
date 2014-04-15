@@ -8,13 +8,10 @@ describe App do
   end
 
   before(:all) do
-    %x(dropdb cellar_test)
-    %x(createdb cellar_test -E UTF8 -h localhost)
-
     Sequel.extension :migration
     Sequel::Migrator.apply App::DB, Cellar.path('db/migrations'), -1
     Sequel::Migrator.apply App::DB, Cellar.path('db/migrations')
-    test_site = App::Site.new
+    test_site = Site.new
     test_site.name = 'test'
     test_site.domain = 'localhost'
     test_site.save
@@ -24,7 +21,12 @@ describe App do
     it 'style.css' do
       get '/assets/style.css'
       expect(last_response).to be_ok
-      expect(last_response.body).to include('stylesheet')
+      expect(last_response.body).to include('.stylesheet.test.ok')
+    end
+    it 'bad.css' do
+      get '/assets/bad.css'
+      expect(last_response.status).to eq(404)
+      expect(last_response.body).to_not include('.stylesheet.test.ok')
     end
   end
 end

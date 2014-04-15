@@ -1,0 +1,6 @@
+.stylesheet {
+  &.test {
+    &.ok { color: green; }
+  }
+}
+

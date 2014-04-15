@@ -5,7 +5,7 @@ module Cellar
       file = File.join(@site_assets, request_file)
       case request_extension
       when 'css'
-        response = 'stylesheet compile error'
+        response = ''
         CELLAR_CSS_TEMPLATES.each do |extension|
           if File.exist? "#{file}.#{extension}"
             response = send(extension, open("#{file}.#{extension}").read)
@@ -16,9 +16,14 @@ module Cellar
         # if ENV["RACK_ENV"] == 'development'
         #   File.open(File.join(@site_root, "public/assets/#{request_file}.css"), 'w').write response
         # end
-        response
+        if response == ''
+          status 404
+          'style not found'
+        else
+          response
+        end
       else
-        '/* bad extension */'
+        pass
       end
     end
   end
