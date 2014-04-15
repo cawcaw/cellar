@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["dmitrygrach@gmail.com"]
   spec.summary       = %q{fast multisiting.}
   spec.description   = %q{Multisiting platform with safe Mustache templates,
-                          Postgresql document-models and rich JSON API.}
+                          Postgresql document-models. deep beta.}
   spec.homepage      = "http://github.com/cawcaw/cellar"
   spec.license       = "MIT"
 
