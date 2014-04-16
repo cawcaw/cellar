@@ -6,16 +6,25 @@ module Cellar
       instance[:yield] = body
       instance.render
     end
+
     def render_page(template, locales)
       instance = Views::Page.new locales
       instance.template_file = template_path template
       render_layout instance.render
     end
+
     def template_path(name)
-      File.join @site_root, "templates/#{name}.mustache"
+      if File.exist? file =  File.join(@site_root, "templates/#{name}.mustache")
+        file
+      elsif File.exist? file = Cellar.path("templates/#{name}.mustache")
+        file
+      else
+        false
+      end
     end
+
     def template_exist?(template)
-      File.exist? template_path(template)
+      template_path(template) != false
     end
 
     def html(source)

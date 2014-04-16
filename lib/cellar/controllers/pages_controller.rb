@@ -15,9 +15,15 @@ module Cellar
       elsif template_exist?(params[:page])
         template = params[:page]
       else
+        status 404
         template = 'page_not_found'
       end
-      render_page template, content.to_ary
+      if template_exist? template
+        render_page template, content.to_ary
+      else
+        status 500
+        'template lost'
+      end
     end
   end
 end
