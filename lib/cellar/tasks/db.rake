@@ -1,15 +1,10 @@
-require './lib/cellar.rb'
+DB_CONFIG = YAML.load_file(File.join(APP_PATH, 'config/database.yml'))
 
 namespace :bundler do
   task :setup do
     require 'rubygems'
     require 'bundler/setup'
   end
-end
-
-task :environment, [:env] => 'bundler:setup' do |cmd, args|
-  ENV["RACK_ENV"] = args[:env] || "development"
-  Dir.glob(File.join("models/*.rb")) { |f| require "./#{f}" }
 end
 
 namespace :db do
@@ -39,37 +34,48 @@ namespace :db do
   desc "Run database migrations"
   task :migrate, :env do |cmd, args|
     env = args[:env] || "development"
-    Rake::Task['environment'].invoke(env)
+    # Rake::Task['environment'].invoke(env)
     Sequel.extension :migration
-    Sequel::Migrator.apply(Cellar::DB, 'db/migrations')
+    Sequel::Migrator.apply(App::DB, Cellar.path('db/migrations'))
   end
 
   desc 'Seed data'
   task :seed, :env do |cmd, args|
-    env = args[:env] || "development"
-    Rake::Task['environment'].invoke(env)
-    load('db/seed.rb') if File.exist?('db/seed.rb')
+    Dir[File.join(APP_PATH, 'sites/*')].each do |site|
+      site_data = YAML.load_file(File.join(site, 'data/site.yml'))
+      site_record = Cellar::Site.new name: site.split('/').last
+      site_record[:domain] = site_data['domain']
+      site_record.save
+      YAML.load_file(File.join(site, 'data/pages.yml')).each do |page|
+        page_record =Cellar::Page.new(site_id: site_record.id)
+        page_record.set_fields page, ['slug', 'template', 'content']
+        page_record.save
+      end
+    end
+    # env = args[:env] || "development"
+    # Rake::Task['environment'].invoke(env)
+    # load('db/seed.rb') if File.exist?('db/seed.rb')
   end
 
   desc "Rollback the database"
   task :rollback, :env do |cmd, args|
     env = args[:env] || "development"
-    Rake::Task['environment'].invoke(env)
+    # Rake::Task['environment'].invoke(env)
     Sequel.extension :migration
-    version = (row = Cellar::DB[:schema_info].first) ? row[:version] : nil
-    Sequel::Migrator.apply(Cellar::DB, 'db/migrations', version - 1)
+    version = (row = App::DB[:schema_info].first) ? row[:version] : nil
+    Sequel::Migrator.apply(App::DB, Cellar.path('db/migrations'), version - 1)
   end
 
   desc "Drop all tables in database"
   task :drop, :env do |cmd, args|
     env = args[:env] || "development"
-    Rake::Task['environment'].invoke(env)
-    Cellar::DB.tables.each do |table|
-      Cellar::DB.run("DROP TABLE #{table}")
+    # Rake::Task['environment'].invoke(env)
+    App::DB.tables.each do |table|
+      App::DB.run("DROP TABLE #{table} CASCADE")
     end
   end
 
   desc "Clean Slate"
-  task :reset, [:env] => [:nuke, :create, :drop, :migrate, :seed]
+  task :reset, [:env] => [:drop, :migrate, :seed]
 end
 
