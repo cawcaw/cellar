@@ -5,7 +5,7 @@ require 'rack/test'
 require File.join(TEST_APP, 'boot')
 
 require 'rake'
-load File.expand_path('../lib/cellar/tasks/db.rake', File.dirname(__FILE__))
+require File.expand_path('../lib/cellar/rake', File.dirname(__FILE__))
 
 include Rack::Test::Methods
 

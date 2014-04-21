@@ -1,0 +1,87 @@
+#!/usr/bin/env ruby#
+
+$:.unshift(File.expand_path(File.dirname(__FILE__) + '/../lib'))
+
+require 'getoptlong'
+require 'fileutils'
+
+require 'cellar/cli'
+
+module Cellar
+  class Cli
+    def self.usage(exitcode=0)
+      puts <<EOF
+USAGE: #{File.basename($0)} [GLOBAL OPTIONS] <command> [COMMAND OPTIONS]
+
+GLOBAL OPTIONS
+    --help, -h            Display this message.
+    --version, -v         Display version number.
+
+COMMANDS
+    new <path>            Create a new Cellar platform.
+    cell <path>           Create a new autonomic site-cell.
+
+EOF
+      exit exitcode
+    end
+
+    def self.version
+      puts "Cellar #{Cellar::VERSION}"
+      exit 0
+    end
+
+    def self.parse_cli
+      opts = GetoptLong.new(
+        ['--help', '-h', GetoptLong::NO_ARGUMENT],
+        ['--version', '-v', GetoptLong::NO_ARGUMENT],
+      )
+      options = {}
+      opts.each do |opt, arg|
+        case opt
+        when '--help'
+          usage(exitcode=0)
+        when '--version'
+          version
+        else
+          options[opt.sub(/^--/, '')] = arg
+        end
+      end
+      options
+    rescue GetoptLong::InvalidOption => e
+      $stderr.puts
+      usage
+    end
+
+    # def self.require_bundled_gems
+    #   if File.exist?('Gemfile')
+    #     require 'bundler'
+    #     Bundler.setup(:default)
+    #     Bundler.require(:default)
+    #   end
+    # end
+
+    def self.copy_template(new_app)
+        FileUtils.mkdir new_app
+        template = File.expand_path File.dirname(__FILE__) + '/../lib/cellar/template_app'
+        FileUtils.copy_entry template, new_app
+        FileUtils.rm_r File.join(new_app, 'sites/test')
+    end
+
+    def self.main(options = parse_cli)
+      command = ARGV.shift
+      # usage if command.nil?
+      case command
+      when 'new'
+        copy_template ARGV.shift
+      else
+        usage
+      end
+    rescue RuntimeError => error
+      $stderr.puts "error: #{error}"
+      exit 1
+    end
+  end
+end
+
+Cellar::Cli.main
+

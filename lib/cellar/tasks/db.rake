@@ -1,5 +1,3 @@
-DB_CONFIG = YAML.load_file(File.join(APP_PATH, 'config/database.yml'))
-
 namespace :bundler do
   task :setup do
     require 'rubygems'
@@ -15,7 +13,6 @@ namespace :db do
     password = DB_CONFIG[env]['password']
     host = DB_CONFIG[env]['host']
     db = DB_CONFIG[env]['database']
-    Rake::Task['environment'].invoke(env)
     if user and password
       %x(createdb #{db} -E UTF8 -U #{user} -w #{pw} -h #{host})
     else
@@ -27,7 +24,6 @@ namespace :db do
   task :nuke, :env do |cmd, args|
     env = args[:env] || "development"
     db = DB_CONFIG[env]['database']
-    Rake::Task['environment'].invoke(env)
     %x(dropdb #{db})
   end
 
@@ -52,9 +48,6 @@ namespace :db do
         page_record.save
       end
     end
-    # env = args[:env] || "development"
-    # Rake::Task['environment'].invoke(env)
-    # load('db/seed.rb') if File.exist?('db/seed.rb')
   end
 
   desc "Rollback the database"
@@ -75,7 +68,7 @@ namespace :db do
     end
   end
 
-  desc "Clean Slate"
+  desc "Recreate db from YAMLs"
   task :reset, [:env] => [:drop, :migrate, :seed]
 end
 
