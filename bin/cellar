@@ -5,8 +5,6 @@ $:.unshift(File.expand_path(File.dirname(__FILE__) + '/../lib'))
 require 'getoptlong'
 require 'fileutils'
 
-require 'cellar/cli'
-
 module Cellar
   class Cli
     def self.usage(exitcode=0)

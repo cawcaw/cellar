@@ -1,9 +1,12 @@
 module Cellar
   class Base
     get '/' do
-      page = Page['index']
-      template = page.template || 'index'
-      content = page.content || []
+      if page = Page['index']
+        template = page.template || 'index'
+        content = page.content || []
+      else
+        template = 'index'
+      end
       render_page template, content.to_ary
     end
 

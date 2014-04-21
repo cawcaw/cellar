@@ -25,6 +25,11 @@ describe App do
         expect(last_response.body).to include('page not found')
       end
     end
+    it 'with partial' do
+      get test_dev('/partial')
+      expect(last_response).to be_ok
+      expect(last_response.body).to include('<p>this partial</p>')
+    end
   end
 end
 
