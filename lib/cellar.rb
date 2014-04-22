@@ -1,14 +1,9 @@
 require 'sinatra/base'
 require 'pg'
 require 'sequel'
+require 'mustache'
 require 'yaml'
 require 'json'
-
-CELLAR_HTML_TEMPLATES = %w(html mustache)
-require 'mustache'
-
-CELLAR_CSS_TEMPLATES = %w(css sass scss)
-require 'sass'
 
 module Cellar
   class << self
@@ -21,6 +16,10 @@ module Cellar
   end
 
   class Base < Sinatra::Base
+    private
+    def production?
+      settings.environment == :production
+    end
   end
 end
 

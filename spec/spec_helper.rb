@@ -3,7 +3,7 @@ TEST_APP = File.expand_path('../lib/cellar/template_app', File.dirname(__FILE__)
 require 'bundler/setup'
 require 'rack/test'
 require File.join(TEST_APP, 'boot')
-
+require 'sass'
 require 'rake'
 require File.expand_path('../lib/cellar/rake', File.dirname(__FILE__))
 

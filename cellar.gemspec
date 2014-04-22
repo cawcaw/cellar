@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'cellar/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "cellar"
+  spec.name          = 'cellar'
   spec.version       = Cellar::VERSION
   spec.authors       = ["Dmitry Grach"]
   spec.email         = ["dmitrygrach@gmail.com"]
@@ -21,13 +21,13 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'sinatra', '~> 1.4.4'
   spec.add_dependency 'mustache'
-  spec.add_dependency 'sass'
   spec.add_dependency 'pg'
   spec.add_dependency 'sequel'
   spec.add_dependency 'json'
-  spec.add_dependency "rake"
+  spec.add_dependency 'rake'
 
-  spec.add_development_dependency "bundler", "~> 1.5"
-  spec.add_development_dependency "rack-test"
-  spec.add_development_dependency "rspec"
+  spec.add_development_dependency 'bundler', '~> 1.5'
+  spec.add_development_dependency 'rack-test'
+  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'sass'
 end

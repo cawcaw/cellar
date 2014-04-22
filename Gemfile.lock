@@ -1,12 +1,11 @@
 PATH
   remote: .
   specs:
-    cellar (0.0.7)
+    cellar (0.0.8)
       json
       mustache
       pg
       rake
-      sass
       sequel
       sinatra (~> 1.4.4)
 
@@ -47,3 +46,4 @@ DEPENDENCIES
   cellar!
   rack-test
   rspec
+  sass

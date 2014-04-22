@@ -1,18 +1,21 @@
 module Cellar
   class Base
-    get '/assets/:asset' do
-      asset_name, extension = params[:asset].split('.')
-      case extension
+    get '/assets/:asset' do |asset|
+      pass unless asset.include? '.'
+      asset_name, extension = asset.split('.')
+      response = case extension
       when 'css'
-        response = render_style asset_name
-        if response.nil?
-          status 404
-          'style not found'
-        else
-          response
-        end
+        content_type 'text/css'
+        render_style asset_name
+      when 'js'
+        content_type 'text/javascript'
+        render_js asset_name
+      end
+      if response
+        response
       else
-        pass
+        status 404
+        'asset lost'
       end
     end
   end
