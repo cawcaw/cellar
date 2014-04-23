@@ -7,13 +7,11 @@ First steps.
 -
 
 Install the gem:
-
 ``` shell
 gem install cellar
 ```
 
 And make Cellar application:
-
 ``` shell
 cellar new cellapp
 ````
@@ -25,8 +23,7 @@ For reference, see in cellapp/sites/example
 Confyg and start.
 -
 
-Now you need to check config/database.yml and enable your favorites gems in Gemfule:
-
+Now you need to check config/database.yml and enable your favorite gems in Gemfile:
 ``` ruby
 # # please, uncoment gems that you want to use
 # gem 'coffee-script'
@@ -36,9 +33,13 @@ Now you need to check config/database.yml and enable your favorites gems in Gemf
 ```
 
 After this install bundle and create database:
-
 ``` shell
 cd cellapp
 bundle
 rake db:reset
+```
+
+I recommend use http://pow.cx, but you can just start with Thin:
+``` shell
+bundle exec thin start
 ```
