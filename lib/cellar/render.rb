@@ -1,20 +1,14 @@
 module Cellar
   class Base
-    def render_layout(body)
-      instance = Views::Layout.new
-      instance.template_path = @site.templates
-      instance.template_file = template_path 'layout'
-      instance.site = @site
-      instance[:yield] = body
-      instance.render
-    end
-
-    def render_page(template, locales)
+    def render_page(template, locales = {})
       instance = Views::Page.new locales
       instance.template_path = @site.templates
       instance.template_file = template_path template
       instance.site = @site
-      render_layout instance.render
+      body = instance.render
+      instance.template_file = template_path 'layout'
+      instance[:yield] = body
+      instance.render
     end
 
     def template_path(name)
@@ -32,18 +26,18 @@ module Cellar
     end
 
     def render_style(name)
-      return unless file = Dir[@site.assets("styles/#{name}.*")][0]
+      return unless file = Dir[@site.assets("stylesheets/#{name}.*")][0]
       case ext = file.split('.').last
       when 'scss', 'sass'
         return unless defined? Sass
         options = {
-          load_paths: [@site.assets('styles')],
+          load_paths: [@site.assets('stylesheets')],
           syntax: ext.to_sym
         }
         Sass::Engine.new(File.read(file), options).render
       when 'less'
         return unless defined? Less
-        less = Less::Parser.new(paths: [@site.assets('styles')])
+        less = Less::Parser.new(paths: [@site.assets('stylesheets')])
         less.parse(File.read(file)).to_css compress: production?
       when 'css'
         File.read(file)

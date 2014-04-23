@@ -8,19 +8,27 @@ module Cellar
       attr_accessor :site
 
       def title
-        @site[:title] || @site[:name] unless @site.nil?
+        @site[:title] || @site[:name]
       end
 
-      def styles
-        styles_set = []
-        unless @site.nil?
-          Dir[@site.assets('styles/*.*')].each do |stylesheet|
-            style_file = File.basename stylesheet, '.*'
-            next if style_file[0] == '_'
-            styles_set << "<link rel='stylesheet' href='/assets/#{style_file}.css'>"
-          end
+      def stylesheets
+        stylesheets_set = []
+        Dir[@site.assets('stylesheets/*.*')].each do |stylesheet|
+          basename = File.basename stylesheet, '.*'
+          next if basename[0] == '_'
+          stylesheets_set << "<link rel='stylesheet' href='/assets/#{basename}.css'>"
         end
-        styles_set.join "\n"
+        stylesheets_set.join "\n"
+      end
+
+      def javascripts
+        javascripts_set = []
+        Dir[@site.assets('javascripts/*.*')].each do |javascript|
+          basename = File.basename javascript, '.*'
+          next if basename[0] == '_'
+          javascripts_set << "<script src='/assets/#{basename}.js'></script>"
+        end
+        javascripts_set.join "\n"
       end
 
       def admin?

@@ -16,6 +16,8 @@ module Cellar
   end
 
   class Base < Sinatra::Base
+    enable :sessions
+
     private
     def production?
       settings.environment == :production
