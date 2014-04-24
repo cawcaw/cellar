@@ -2,7 +2,8 @@ module Cellar
   class Base
     get '/assets/:asset' do |asset|
       pass unless asset.include? '.'
-      asset_name, extension = asset.split('.')
+      asset_name = asset.split('.')[0..-2].join('.')
+      extension = asset.split('.').last
       response = case extension
       when 'css'
         content_type 'text/css'

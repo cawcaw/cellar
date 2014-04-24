@@ -17,6 +17,7 @@ module Cellar
 
   class Base < Sinatra::Base
     enable :sessions
+    set :static, true
 
     private
     def production?

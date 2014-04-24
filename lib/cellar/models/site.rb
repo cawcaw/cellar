@@ -2,16 +2,16 @@ module Cellar
   class Site < Sequel::Model
     one_to_many :pages
 
-    def site_root
+    def root_path
       File.join APP_PATH, "sites/#{name.downcase}"
     end
 
     def templates
-      File.join site_root, 'templates'
+      File.join root_path, 'templates'
     end
 
     def assets(*subdir)
-      File.join site_root, 'assets', subdir
+      File.join root_path, 'assets', subdir
     end
   end
 end
