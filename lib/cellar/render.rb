@@ -6,9 +6,13 @@ module Cellar
       instance.template_file = template_path template
       instance.site = @site
       body = instance.render
-      instance.template_file = template_path 'layout'
-      instance[:yield] = body
-      instance.render
+      if request.xhr?
+        body
+      else
+        instance.template_file = template_path 'layout'
+        instance[:yield] = body
+        instance.render
+      end
     end
 
     def template_path(name)
@@ -26,6 +30,7 @@ module Cellar
     end
 
     def render_style(name)
+      return File.read(Cellar.path('assets/cellar.css')) if name == 'cellar'
       return unless file = Dir[@site.assets("stylesheets/#{name}.*")][0]
       case ext = file.split('.').last
       when 'scss', 'sass'
@@ -45,6 +50,7 @@ module Cellar
     end
 
     def render_js(name)
+      return File.read(Cellar.path('assets/cellar.js')) if name == 'cellar'
       return unless file = Dir[@site.assets("javascripts/#{name}.*")][0]
       case ext = file.split('.').last
       when 'coffee'

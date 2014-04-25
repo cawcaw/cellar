@@ -5,6 +5,13 @@ module Cellar
         File.read("#{template_path}/_#{name}.#{template_extension}")
       end
 
+      def cellar
+        "<script src='//code.jquery.com/jquery-1.11.0.min.js'></script>\n"\
+        "<script src='//code.jquery.com/jquery-migrate-1.2.1.min.js'></script>\n"\
+        "<script src='/assets/cellar.js'></script>\n"\
+        "<link rel='stylesheet' href='/assets/cellar.css'>"
+      end
+
       attr_accessor :site
 
       def title

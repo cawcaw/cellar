@@ -1,0 +1,17 @@
+#c-notice {
+  position: fixed;
+  list-style: none;
+  left: 20px;
+  bottom: 20px;
+}
+
+#c-notice>li {
+  padding: 6px;
+  margin: 0px 0px 2px;
+  background: #60a060;
+  color: white;
+  font: bold 12px sans-serif;
+  border-bottom: 2px solid white;
+}
+
+
