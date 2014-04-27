@@ -1,10 +1,10 @@
-CELLΛR
-=
+# CELLΛR
+
 Multisite mustache hosting.
 Currently deep beta and actively developed.
 
-First steps.
--
+### First steps.
+
 
 Install the gem:
 ``` shell
@@ -20,8 +20,8 @@ These two simple steps will create a platform for hosting many sites at once.
 
 For reference, see in cellapp/sites/example
 
-Confyg and start.
--
+### Confyg and start.
+
 
 Now you need to check config/database.yml and enable your favorite gems in Gemfile:
 ``` ruby
@@ -39,7 +39,7 @@ bundle
 rake db:reset
 ```
 
-I recommend use http://pow.cx, but you can just start with Thin:
+I re commend use http://pow.cx, but you can just start with Thin:
 ``` shell
 bundle exec thin start
 ```
