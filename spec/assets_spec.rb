@@ -11,7 +11,7 @@ describe App do
       get test_dev('/assets/bad.css')
       expect(last_response.status).to eq(404)
     end
-    it 'common.js' do
+    it 'script.js' do
       get test_dev('/assets/common.js')
       expect(last_response).to be_ok
       expect(last_response.body).to include('javascript test ok')
