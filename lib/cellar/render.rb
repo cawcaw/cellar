@@ -4,6 +4,7 @@ module Cellar
       instance = Views::Page.new locales
       instance.template_path = @site.templates
       instance.template_file = template_path template
+      instance.request = request
       instance.site = @site
       body = instance.render
       if request.xhr?

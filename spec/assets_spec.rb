@@ -12,7 +12,7 @@ describe App do
       expect(last_response.status).to eq(404)
     end
     it 'script.js' do
-      get test_dev('/assets/common.js')
+      get test_dev('/assets/script.js')
       expect(last_response).to be_ok
       expect(last_response.body).to include('javascript test ok')
     end

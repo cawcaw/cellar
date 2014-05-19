@@ -69,6 +69,6 @@ namespace :db do
   end
 
   desc "Recreate db from YAMLs"
-  task :reset, [:env] => [:drop, :migrate, :seed]
+  task :reset, [:env] => [:drop, :nuke, :create, :migrate, :seed]
 end
 

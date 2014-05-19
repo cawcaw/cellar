@@ -13,6 +13,7 @@ module Cellar
       end
 
       attr_accessor :site
+      attr_accessor :request
 
       def title
         @site[:title] || @site[:name]
@@ -40,6 +41,14 @@ module Cellar
 
       def admin?
         false
+      end
+
+      def req_path
+        @request.path_info
+      end
+
+      def root?
+        req_path == '/'
       end
     end
   end

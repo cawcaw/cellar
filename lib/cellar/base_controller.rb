@@ -1,7 +1,12 @@
 module Cellar
   class Base
     before do
-      @site = Site[domain: request.host]
+      if settings.development?
+        @site = Site.last
+      else
+        @site = Site[domain: request.host]
+      end
+      @path = request.path_info
       settings.public_folder = File.join @site.root_path, 'public'
     end
   end
