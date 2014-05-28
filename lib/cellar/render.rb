@@ -6,6 +6,7 @@ module Cellar
       instance.template_file = template_path template
       instance.request = request
       instance.site = @site
+      instance.user = @user
       body = instance.render
       if request.xhr?
         body

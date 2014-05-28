@@ -1,7 +1,6 @@
 module Cellar
   class Base
-    db_config = YAML.load_file(File.join(APP_PATH, 'config/database.yml'))
-
+    db_config = Cellar.read_yaml 'config/database.yml'
     %w(development production test).each do |env|
       configure env.to_sym do
         set :environment, env.to_sym

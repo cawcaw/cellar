@@ -6,10 +6,10 @@ Sequel.migration do
       String      :slug
       String      :title
       Text        :description
-      Text        :reywords
+      Text        :keywords
       DateTime    :created_at
       DateTime    :updated_at
-      String      :template
+      String      :template, default: 'page'
       column      :content, 'text[]'
     end
   end

@@ -1,6 +1,7 @@
 module Cellar
   class Site < Sequel::Model
     one_to_many :pages
+    one_to_many :users
 
     def root_path
       File.join APP_PATH, "sites/#{name.downcase}"

@@ -43,9 +43,15 @@ namespace :db do
       site_record[:domain] = site_data['domain']
       site_record.save
       YAML.load_file(File.join(site, 'data/pages.yml')).each do |page|
-        page_record =Cellar::Page.new(site_id: site_record.id)
+        page_record = Cellar::Page.new(site_id: site_record.id)
         page_record.set_fields page, ['slug', 'template', 'content']
         page_record.save
+      end
+      YAML.load_file(File.join(site, 'data/users.yml')).each do |user|
+        user_record = Cellar::User.new(site_id: site_record.id)
+        user_record.set_fields user, ['login', 'email', 'role', 'token']
+        user_record.password_digest = Cellar::User.bcrypt(user['password'])
+        user_record.save
       end
     end
   end
@@ -70,5 +76,8 @@ namespace :db do
 
   desc "Recreate db from YAMLs"
   task :reset, [:env] => [:drop, :nuke, :create, :migrate, :seed]
+
+  desc "Reload db from YAMLs"
+  task :soft_reset, [:env] => [:drop, :migrate, :seed]
 end
 

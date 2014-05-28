@@ -13,6 +13,7 @@ module Cellar
       end
 
       attr_accessor :site
+      attr_accessor :user
       attr_accessor :request
 
       def title
@@ -40,7 +41,15 @@ module Cellar
       end
 
       def admin?
-        false
+        if @user.nil?
+          nil
+        else
+          @user.admin?
+        end
+      end
+
+      def user_name
+        @user.login
       end
 
       def req_path
@@ -49,6 +58,18 @@ module Cellar
 
       def root?
         req_path == '/'
+      end
+
+      def state_class
+        css_classes = []
+        if root?
+          css_classes << 'on-root'
+        elsif req_path == '/login'
+          css_classes << 'on-login'
+        else
+          css_classes << "on-page page-#{req_path.split('/').join('-')}"
+        end
+        css_classes.join ' '
       end
     end
   end

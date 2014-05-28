@@ -39,7 +39,7 @@ bundle
 rake db:reset
 ```
 
-I recommend use http://pow.cx, but you can just start with Thin:
+And just start with Thin:
 ``` shell
 bundle exec thin start
 ```
