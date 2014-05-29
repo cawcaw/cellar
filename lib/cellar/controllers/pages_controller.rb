@@ -23,10 +23,20 @@ module Cellar
         template = 'page_not_found'
       end
       if template_exist? template
-        render_page template, content: content
+        render_page template, {content: content, slug: params[:page]}
       else
         status 500
         'template lost'
+      end
+    end
+
+    post '/pages' do
+      if @user.admin?
+        page = @site.pages_dataset.where(slug: params[:slug]).first
+        if page
+          page.content[params[:index].to_i] = params[:content]
+          page.save
+        end
       end
     end
   end

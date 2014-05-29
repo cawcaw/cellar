@@ -8,7 +8,7 @@ module Cellar
       end
       @user = env['warden'].user
       if @user
-        @user = nil unless @user.site_id == @site.id
+        @user = Cellar::User.guest unless @user.site_id == @site.id
       end
       @path = request.path_info
       settings.public_folder = File.join @site.root_path, 'public'

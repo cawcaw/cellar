@@ -2,8 +2,7 @@
   position: fixed;
   list-style: none;
   left: 20px;
-  bottom: 20px;
-}
+  bottom: 20px;}
 
 #c-notice>li {
   padding: 6px;
@@ -11,7 +10,24 @@
   background: #60a060;
   color: white;
   font: bold 12px sans-serif;
-  border-bottom: 2px solid white;
-}
+  border-bottom: 2px solid white;}
+
+.c-editable {
+  position: relative;}
+  /* .c-editable .c-edit { */
+  /*   position: absolute; */
+  /*   right: 0px; */
+  /*   top: 0px; */
+  /*   color: white; */
+  /*   background: #090; */
+  /*   padding: 0px 2px; */
+  /*   border-radius: 2px; */
+  /*   display: none;} */
+  .c-editable:hover {
+    background: rgba(0, 155, 0, 0.2);
+    cursor: pointer;
+    box-shadow: 0px 0px 8px 4px rgba(0, 155, 0, 0.2);}
+    /* .c-editable:hover .c-edit { */
+    /*   display: block;} */
 
 

@@ -18,6 +18,10 @@ module Cellar
       def bcrypt(password)
         BCrypt::Engine.hash_secret(password, Cellar.config['secret_salt'])
       end
+
+      def guest
+        self.new role: 'guest'
+      end
     end
   end
 end
