@@ -57,7 +57,7 @@ module Cellar
       end
 
       def path_name
-        req_path.split('/').join('-')
+        req_path.split('/').reject(&:empty?).join('-')
       end
 
       def root?
