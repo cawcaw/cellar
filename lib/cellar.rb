@@ -44,5 +44,6 @@ require Cellar.path('warden')
 require Cellar.path('base_controller')
 require Cellar.path('render')
 
-Dir.glob(Cellar.path('views/*.rb'), &method(:require))
+require Cellar.path('views/layout')
+require Cellar.path('views/page')
 
