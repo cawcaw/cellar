@@ -1,5 +1,6 @@
 module Cellar
   class Base
+    private
     def render_page(template, locales = {})
       instance = Views::Page.new locales
       instance.template_path = @site.templates

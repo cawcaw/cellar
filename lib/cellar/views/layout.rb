@@ -60,6 +60,10 @@ module Cellar
         req_path.split('/').reject(&:empty?).join('-')
       end
 
+      def page_name
+        req_path.split('/').reject(&:empty?).last
+      end
+
       def root?
         req_path == '/'
       end
@@ -71,7 +75,7 @@ module Cellar
         elsif req_path == '/login'
           css_classes << 'on-login'
         else
-          css_classes << "on-page page-#{path_name}"
+          css_classes << "on-page page-#{page_name} path-#{path_name}"
         end
         css_classes.join ' '
       end

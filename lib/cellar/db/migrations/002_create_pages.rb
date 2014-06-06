@@ -3,6 +3,7 @@ Sequel.migration do
     create_table(:pages) do
       primary_key :id
       foreign_key :site_id, :sites
+      foreign_key :parent_id, :pages
       String      :slug
       String      :title
       Text        :description

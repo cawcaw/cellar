@@ -56,6 +56,23 @@ namespace :db do
     end
   end
 
+  desc 'Save all db data to YAML files'
+  task :dump, :env do |cmd, args|
+    def record_to_yaml(record):
+      # this is clever hack to avoid some errors
+      YAML.dump(JSON.parse(record.to_hash.to_json))
+    end
+    Cellar::Site.all.each do |site|
+      directory = File.join(APP_PATH, site.name)
+      unless File.directory?(directory)
+        Dir.mkdir directory
+      end
+      %w[pages users].each do
+
+      end
+    end
+  end
+
   desc "Rollback the database"
   task :rollback, :env do |cmd, args|
     env = args[:env] || "development"
