@@ -5,7 +5,7 @@ module Cellar
       @locales = {}
 
       def content
-        content_1 unless @content[0].nil?
+        content_1 unless @content.nil?
       end
 
       def can_edit?
@@ -14,10 +14,12 @@ module Cellar
 
       def initialize(locales = {})
         @locales = locales
-        @content = @locales[:content]
-        @content.size.times do |index|
-          instance_eval  "def content_#{index+1};"\
-            " editable @content[#{index}], #{index}; end"
+        @content = @locales["content"]
+        if @content
+          @content.size.times do |index|
+            instance_eval  "def content_#{index+1};"\
+              " editable @content[#{index}], #{index}; end"
+          end
         end
       end
 

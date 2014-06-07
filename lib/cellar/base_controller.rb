@@ -18,5 +18,5 @@ end
 
 require Cellar.path('controllers/session_controller.rb')
 require Cellar.path('controllers/assets_controller.rb')
-require Cellar.path('controllers/pages_controller.rb')
+require Cellar.path('controllers/nodes_controller.rb')
 

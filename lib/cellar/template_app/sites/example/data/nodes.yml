@@ -1,0 +1,10 @@
+- slug: 'about'
+  template: 'page'
+  data:
+    content:
+      - 'about us'
+- slug: 'contacts'
+  template: 'page'
+  data:
+    content:
+      - 'tel: 123-4567'

@@ -1,0 +1,11 @@
+---
+- slug: 'page1'
+  template: 'article'
+  data:
+    content:
+      - 'text content'
+- slug: 'page2'
+  template: 'articl'
+  data:
+    content:
+      - 'text content'

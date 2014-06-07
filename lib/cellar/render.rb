@@ -8,7 +8,8 @@ module Cellar
       instance.request = request
       instance.site = @site
       instance.user = @user
-      body = instance.render
+      locales.delete "content"
+      body = instance.render locales
       if request.xhr?
         body
       else

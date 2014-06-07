@@ -1,9 +1,0 @@
----
-- slug: 'page1'
-  template: 'article'
-  content:
-    - 'text content'
-- slug: 'page2'
-  template: 'articl'
-  content:
-    - 'text content'

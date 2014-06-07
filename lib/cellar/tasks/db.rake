@@ -42,10 +42,10 @@ namespace :db do
       site_record = Cellar::Site.new name: site.split('/').last
       site_record[:domain] = site_data['domain']
       site_record.save
-      YAML.load_file(File.join(site, 'data/pages.yml')).each do |page|
-        page_record = Cellar::Page.new(site_id: site_record.id)
-        page_record.set_fields page, ['slug', 'template', 'content']
-        page_record.save
+      YAML.load_file(File.join(site, 'data/nodes.yml')).each do |node|
+        node_record = Cellar::Node.new(site_id: site_record.id)
+        node_record.set_fields node, ['slug', 'template', 'data']
+        node_record.save
       end
       YAML.load_file(File.join(site, 'data/users.yml')).each do |user|
         user_record = Cellar::User.new(site_id: site_record.id)
@@ -58,7 +58,7 @@ namespace :db do
 
   desc 'Save all db data to YAML files'
   task :dump, :env do |cmd, args|
-    def record_to_yaml(record):
+    def record_to_yaml(record)
       # this is clever hack to avoid some errors
       YAML.dump(JSON.parse(record.to_hash.to_json))
     end
