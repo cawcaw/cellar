@@ -1,0 +1,21 @@
+---
+- name: new
+  fields:
+    title:
+      type: string
+    date:
+      type: date
+    body:
+      type: text
+- name: sale
+  fields:
+    title:
+      type: string
+    start:
+      type: date
+    stop:
+      type: date
+    discount:
+      type: integer
+      max: 100
+

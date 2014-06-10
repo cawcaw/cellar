@@ -1,11 +1,23 @@
 ---
-- slug: 'page1'
-  template: 'article'
+- slug: page2
+  template: artcl
   data:
     content:
       - 'text content'
-- slug: 'page2'
-  template: 'articl'
+- slug: page1
+  template: article
   data:
     content:
       - 'text content'
+- slug: new-1
+  type: new
+  data:
+    title: 'new 1'
+    body: 'new content'
+- slug: new-2
+  template: 'lost_new'
+  type: new
+  data:
+    title: 'new 2'
+    body: 'new content'
+

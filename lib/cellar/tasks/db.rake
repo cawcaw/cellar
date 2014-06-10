@@ -42,10 +42,31 @@ namespace :db do
       site_record = Cellar::Site.new name: site.split('/').last
       site_record[:domain] = site_data['domain']
       site_record.save
-      YAML.load_file(File.join(site, 'data/nodes.yml')).each do |node|
-        node_record = Cellar::Node.new(site_id: site_record.id)
-        node_record.set_fields node, ['slug', 'template', 'data']
-        node_record.save
+
+      # TODO need refactoring
+      nodes = YAML.load_file(File.join(site, 'data/nodes.yml'))
+      nodids, nodadded, nodsaved, nodcount  = {}, [], 0, 0
+      nodesize = nodes.size
+      while nodsaved < ( nodesize - 1 )
+        pid =  nodes[nodcount]['parent_id']
+        if (pid.nil? || nodids[pid]) && !nodadded.include?(nodcount)
+          node_record = Cellar::Node.new(site_id: site_record.id)
+          node_record.set_fields nodes[nodcount], ['slug', 'template', 'data']
+          node_record.parent_id = nodids[pid]
+          node_record.save
+          nodadded << nodcount
+          if nodes[nodcount]['id']
+            nodids[nodes[nodcount]['id']] = node_record.id
+          end
+          nodsaved += 1
+        end
+        nodcount = (nodcount + 1) % nodesize
+      end
+
+      YAML.load_file(File.join(site, 'data/node_types.yml')).each do |node_type_record|
+        node_type_record = Cellar::NodeType.new(site_id: site_record.id)
+        node_type_record.set_fields node_type_record, ['name', 'fields']
+        node_type_record.save
       end
       YAML.load_file(File.join(site, 'data/users.yml')).each do |user|
         user_record = Cellar::User.new(site_id: site_record.id)

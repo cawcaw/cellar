@@ -2,7 +2,7 @@ module Cellar
   class Base
     get '/' do
       content = []
-      if node = @site.nodes_dataset.where(slug: 'index', type: 'page').first
+      if node = load_node('', 'index', 'page')
         template = node.template || 'index'
         content = node.data[:content] || []
       else
@@ -12,9 +12,13 @@ module Cellar
     end
 
     get '/:node' do
-      if node = @site.nodes_dataset.where(slug: params[:node], type: 'page').first
-        template = node.template
-        node = node.data.merge(node.to_hash)
+      if node = load_node('', params[:node], 'page')
+        template = node.template || node.type
+        if node.data
+          node = node.data.merge(node.to_hash)
+        else
+          node = node.to_hash
+        end
         node.delete :data
       elsif template_exist?(params[:node])
         template = params[:node]
@@ -38,6 +42,23 @@ module Cellar
           page.content[params[:index].to_i] = params[:content]
           page.save
         end
+      end
+    end
+
+    private
+
+    def load_node(path, slug, type)
+      parent = nil
+      while !path.nil? && path != ""
+        path = path.split('/').reject(&:blank?)
+        pslg = path[0]
+        path = path[1..-1].join("/")
+        parent = @site.nodes_dataset.where(slug: pslg, parent_id: parent).first.id
+      end
+      if type
+        @site.nodes_dataset.where(slug: slug, parent_id: parent, type: type).first
+      else
+        @site.nodes_dataset.where(slug: slug, parent_id: parent).first
       end
     end
   end

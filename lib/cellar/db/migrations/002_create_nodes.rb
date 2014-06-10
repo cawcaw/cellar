@@ -9,6 +9,7 @@ Sequel.migration do
       DateTime    :created_at
       DateTime    :updated_at
       String      :template, default: 'page'
+      String      :childs
       column      :data, "json"
     end
   end

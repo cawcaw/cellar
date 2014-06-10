@@ -22,7 +22,7 @@ RSpec.configure do |config|
     App::DB.transaction(rollback: :always){ example.run }
   end
   config.before(:all) do
-    Rake::Task['db:reset'].invoke
+    Rake::Task['db:soft_reset'].invoke
   end
 end
 
