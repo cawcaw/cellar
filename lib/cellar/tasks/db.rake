@@ -47,12 +47,13 @@ namespace :db do
       nodes = YAML.load_file(File.join(site, 'data/nodes.yml'))
       nodids, nodadded, nodsaved, nodcount  = {}, [], 0, 0
       nodesize = nodes.size
-      while nodsaved < ( nodesize - 1 )
+      while nodsaved < nodesize
         pid =  nodes[nodcount]['parent_id']
         if (pid.nil? || nodids[pid]) && !nodadded.include?(nodcount)
           node_record = Cellar::Node.new(site_id: site_record.id)
-          node_record.set_fields nodes[nodcount], ['slug', 'template', 'data']
+          node_record.set_fields nodes[nodcount], ['slug', 'template', 'type', 'data']
           node_record.parent_id = nodids[pid]
+          node_record.type ||= 'page'
           node_record.save
           nodadded << nodcount
           if nodes[nodcount]['id']

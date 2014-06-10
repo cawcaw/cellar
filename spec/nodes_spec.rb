@@ -11,18 +11,18 @@ describe App do
     end
     context 'without (with lost) template' do
       it 'but with db record' do
-        get test_dev('/sales/mega-discount')
+        get test_dev('/news/new-2')
         expect(last_response.status).to eq(500)
       end
       it 'and without db record' do
-        get test_dev('/news/new-2')
+        get test_dev('/news/lost-new')
         expect(last_response.status).to eq(404)
         expect(last_response.body).to include('page not found')
       end
     end
     context 'after loading to db' do
       it 'check count' do
-        expect(Cellar::Node.all.size).to eq(4)
+        expect(Cellar::Node.all.size).to eq(7)
       end
     end
   end

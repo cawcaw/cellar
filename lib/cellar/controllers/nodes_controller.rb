@@ -11,8 +11,8 @@ module Cellar
       render_page template, content: content
     end
 
-    get '/:node' do
-      if node = load_node('', params[:node], 'page')
+    get '*/:node' do
+      if node = load_node(params[:splat], params[:node])
         template = node.template || node.type
         if node.data
           node = node.data.merge(node.to_hash)
@@ -47,13 +47,13 @@ module Cellar
 
     private
 
-    def load_node(path, slug, type)
-      parent = nil
+    def load_node(path, slug, type=nil)
       while !path.nil? && path != ""
-        path = path.split('/').reject(&:blank?)
+        path = path[0].split('/').reject(&:empty?)
         pslg = path[0]
-        path = path[1..-1].join("/")
-        parent = @site.nodes_dataset.where(slug: pslg, parent_id: parent).first.id
+        path = if path[1] then path[1..-1].join("/") else nil end
+        parent = @site.nodes_dataset.where(slug: pslg, parent_id: parent).first
+        parent = parent.id if parent
       end
       if type
         @site.nodes_dataset.where(slug: slug, parent_id: parent, type: type).first

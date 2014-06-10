@@ -9,12 +9,17 @@
   data:
     content:
       - 'text content'
+- id: 20
+  slug: news
+  template: article
 - slug: new-1
+  parent_id: 20
   type: new
   data:
     title: 'new 1'
     body: 'new content'
 - slug: new-2
+  parent_id: 20
   template: 'lost_new'
   type: new
   data:
