@@ -1,5 +1,7 @@
 module Cellar
   class Base
+    MAX_NESTING = 10
+
     get '/' do
       content = []
       if node = load_node('', 'index', 'page')
@@ -50,6 +52,8 @@ module Cellar
     def load_node(path, slug, type=nil)
       while !path.nil? && path != ""
         path = path[0].split('/').reject(&:empty?)
+        # protection against malicious request a/b/c/d..n
+        return nil if path.size > MAX_NESTING
         pslg = path[0]
         path = if path[1] then path[1..-1].join("/") else nil end
         parent = @site.nodes_dataset.where(slug: pslg, parent_id: parent).first
