@@ -42,9 +42,9 @@ module Cellar
 
     post '/pages' do
       if @user.admin?
-        page = @site.pages_dataset.where(slug: params[:slug]).first
+        page = @site.nodes_dataset.where(slug: params[:slug]).first
         if page
-          page.content[params[:index].to_i] = params[:content]
+          page.data['content'][params[:index].to_i] = params[:content]
           page.save
         end
       end
