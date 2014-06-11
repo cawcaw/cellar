@@ -51,7 +51,8 @@ namespace :db do
         pid =  nodes[nodcount]['parent_id']
         if (pid.nil? || nodids[pid]) && !nodadded.include?(nodcount)
           node_record = Cellar::Node.new(site_id: site_record.id)
-          node_record.set_fields nodes[nodcount], ['slug', 'template', 'type', 'data']
+          node_record.set_fields nodes[nodcount],
+            ['slug', 'template', 'type', 'data', 'childs']
           node_record.parent_id = nodids[pid]
           node_record.type ||= 'page'
           node_record.save

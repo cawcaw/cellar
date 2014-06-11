@@ -16,6 +16,9 @@ module Cellar
     get '*/:node' do
       if node = load_node(params[:splat], params[:node])
         template = node.template || node.type
+        if node.childs
+          node.childs = node.nodes.map { |child| child.data }
+        end
         if node.data
           node = node.data.merge(node.to_hash)
         else
