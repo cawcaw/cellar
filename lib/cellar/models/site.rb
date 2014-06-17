@@ -1,6 +1,7 @@
 module Cellar
   class Site < Sequel::Model
     one_to_many :nodes
+    one_to_many :node_types
     one_to_many :users
 
     def root_path

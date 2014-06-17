@@ -65,9 +65,9 @@ namespace :db do
         nodcount = (nodcount + 1) % nodesize
       end
 
-      YAML.load_file(File.join(site, 'data/node_types.yml')).each do |node_type_record|
+      YAML.load_file(File.join(site, 'data/node_types.yml')).each do |node_type|
         node_type_record = Cellar::NodeType.new(site_id: site_record.id)
-        node_type_record.set_fields node_type_record, ['name', 'fields']
+        node_type_record.set_fields node_type, ['name', 'fields', 'auto_load']
         node_type_record.save
       end
       YAML.load_file(File.join(site, 'data/users.yml')).each do |user|

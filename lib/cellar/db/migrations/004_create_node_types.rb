@@ -6,6 +6,7 @@ Sequel.migration do
       String      :name
       DateTime    :created_at
       DateTime    :updated_at
+      column      :auto_load, :integer
       column      :fields, "json"
     end
   end

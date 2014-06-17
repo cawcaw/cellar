@@ -9,13 +9,14 @@ module Cellar
       instance.site = @site
       instance.user = @user
       locales.delete "content"
-      body = instance.render locales
       if request.xhr?
-        body
+        instance.render locales
       else
+        locales.merge! auto_load_data
+        body = instance.render locales
         instance.template_file = template_path 'layout'
         instance[:yield] = body
-        instance.render
+        instance.render locales
       end
     end
 
@@ -63,6 +64,17 @@ module Cellar
       when 'js'
         File.read(file)
       end
+    end
+
+    def auto_load_data
+      loaded = {}
+      @site.node_types_dataset.where('auto_load > 0').each do |t|
+        loaded[:"auto_#{t.name}s"] =
+          @site.nodes_dataset.where(type: t.name).limit(t.auto_load).
+          all.map { |node| node.data }
+      end
+      # TODO records
+      loaded
     end
   end
 end
