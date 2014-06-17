@@ -6,7 +6,11 @@ module Cellar
       content = []
       if node = load_node('', 'index', 'page')
         template = node.template || 'index'
-        content = node.data[:content] || []
+        if node.data
+          content = node.data[:content] || []
+        else
+          content = []
+        end
       else
         template = 'index'
       end
